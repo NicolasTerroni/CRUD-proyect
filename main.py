@@ -1,3 +1,5 @@
+import sys
+
 clients = "Pablo,Ricardo,"
 
 def create_client(client_name):
@@ -62,7 +64,12 @@ def search_client(client_name):
 def _get_client_name():
     client_name = None
     while not client_name or client_name == "":
-        client_name =  input("Input client´s name: ")
+        client_name =  input("Input client´s name or ´exit´ to cancel: ")
+        if client_name == "exit":
+            break
+    if client_name == "exit":
+             sys.exit()
+
     return client_name
 
 
