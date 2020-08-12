@@ -60,7 +60,10 @@ def search_client(client_name):
 
 
 def _get_client_name():
-    return  input("Input client´s name: ")
+    client_name = None
+    while not client_name or client_name == "":
+        client_name =  input("Input client´s name: ")
+    return client_name
 
 
 def _print_welcome():
