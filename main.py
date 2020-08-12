@@ -1,12 +1,25 @@
 import sys
 
-clients = ["Pablo","Ricardo"]
+clients =[
+    {
+        'name': 'Pablo',
+        'company': 'Google',
+        'email': 'pablo@google.com',
+        'position': 'Sofware Engineer',
+    },
+    {
+        'name': 'Ricardo',
+        'company': 'Facebook',
+        'email': 'ricardo@facebook.com',
+        'position': 'Data Engineer',
+    },
+]
 
-def create_client(client_name):
+def create_client(client):
     global clients
     
-    if client_name not in clients:
-        clients.append(client_name.capitalize())
+    if client not in clients:
+        clients.append(client)
         print("*" * 50)
         print("Client added")
         print("*" * 50)
@@ -16,10 +29,10 @@ def create_client(client_name):
 def list_clients():
     global clients
 
-    print("*" * 50)
+    
     for idx, client in enumerate(clients):
-        print(f"{idx}: {client}")
-    print("*" * 50)
+        print(f"""[{idx}] - {client["name"]} - {client["company"]} - {client["email"]} - {client["position"]}""")
+        print("-" * 50)
 
 
 def update_client(client_name, updated_client_name):
@@ -69,16 +82,16 @@ def search_client(client_name):
             return True
 
 
-def _get_client_name():
-    client_name = None
-    while not client_name or client_name == "":
-        client_name =  input("Input client´s name or ´exit´ to cancel: ")
-        if client_name == "exit":
+def _get_client_field(field_name):
+    field = None
+    while not field or field == "":
+        field =  input(f"Input client´s {field_name} or ´exit´ to cancel and close: ")
+        if field == "exit":
             break
-    if client_name == "exit":
-             sys.exit()
-
-    return client_name
+    if field == "exit":
+        sys.exit()
+    
+    return field
 
 
 def _print_welcome():
@@ -102,8 +115,14 @@ if __name__ == "__main__":
         command = input("Input command ----> ")
 
         if command == "1":
-            client_name = _get_client_name()
-            create_client(client_name)
+            client = {
+                "name": _get_client_field("name"),
+                "company":_get_client_field("company"),
+                "email":_get_client_field("email"),
+                "position":_get_client_field("position")          
+                }
+            create_client(client)
+
         elif command == "2":
             print("*" * 50)
             list_clients()
