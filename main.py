@@ -1,34 +1,36 @@
 import sys
 
-clients = "Pablo,Ricardo,"
+clients = ["Pablo","Ricardo"]
 
 def create_client(client_name):
     global clients
     
-    clients+=client_name.capitalize()
-    _add_comma()
-    list_clients()
-
+    if client_name not in clients:
+        clients.append(client_name.capitalize())
+        print("*" * 50)
+        print("Client added")
+        print("*" * 50)
+    else:
+        print("Client already in client´s list")
 
 def list_clients():
     global clients
-    print("*" * 50)
-    print(clients)
-    print("*" * 50)
 
-
-def _add_comma():
-    global clients
-    
-    clients+=","
+    print("*" * 50)
+    for idx, client in enumerate(clients):
+        print(f"{idx}: {client}")
+    print("*" * 50)
 
 
 def update_client(client_name, updated_client_name):
     global clients
 
     if client_name.capitalize() in clients:
-        clients = clients.replace(client_name.capitalize() + ",", updated_client_name.capitalize() + ",")
-        list_clients()
+        idx = clients.index(client_name.capitalize())
+        clients[idx] = updated_client_name.capitalize()
+        print("*" * 50)
+        print("Client updated.")
+        print("*" * 50)
     else:
         print("Client is not in clients list.")
 
@@ -39,22 +41,28 @@ def delete_client(client_name):
     if client_name.capitalize() in clients:
         ask_again = input(f"Are you sure? ´{client_name.capitalize()}´ will be erased. (Y/N): ")
         if ask_again.upper() == "Y": 
-            clients = clients.replace(client_name.capitalize() + ",","")
-            list_clients()
+            clients.remove(client_name.capitalize())
+            print("*" * 50)
+            print("Client removed.")
+            print("*" * 50)
         elif ask_again.upper() == "N":
+            print("*" * 50)
             print("Canceling.")
+            print("*" * 50)
         else:
+            print("*" * 50)
             print("Unknown command.")
+            print("*" * 50)
     else:
+        print("*" * 50)
         print("Client is not in clients list.")
+        print("*" * 50)
 
 
 def search_client(client_name):
     global clients
-    
-    clients_list = clients.split(",") 
 
-    for client in clients_list:
+    for client in clients:
         if client != client_name.capitalize():
             continue
         else:
