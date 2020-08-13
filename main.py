@@ -83,11 +83,16 @@ def delete_client(client_id):
 def search_client(client_name):
     global clients
 
-    for client in clients:
-        if client != client_name.capitalize():
+    for idx, client in enumerate(clients):
+        if idx != client_id:
             continue
         else:
-            return True
+            print("-" * 50)
+            print(f"""[{idx}] - {client["name"]} - {client["company"]} - {client["email"]} - {client["position"]}""")
+            print("-" * 50)
+            break
+    else:
+        print(f"Client ID: {idx} does not exist.")
 
 
 def _get_client_field(field_name):
@@ -142,7 +147,9 @@ if __name__ == "__main__":
             client_id = int(input("Input client ID to delete: "))
             delete_client(client_id)
         elif command == "5":
-            pass
+            client_id = int(input("Input client ID to search: "))
+            search_client(client_id)
+            
         elif command == "6":
             print("")
             print("Thank you for choosing us.")
