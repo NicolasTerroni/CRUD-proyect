@@ -55,24 +55,28 @@ def update_client(client_id):
 def delete_client(client_id):
     global clients
 
-    if client_name.capitalize() in clients:
-        ask_again = input(f"Are you sure? ´{client_name.capitalize()}´ will be erased. (Y/N): ")
-        if ask_again.upper() == "Y": 
-            clients.remove(client_name.capitalize())
-            print("*" * 50)
-            print("Client removed.")
-            print("*" * 50)
-        elif ask_again.upper() == "N":
-            print("*" * 50)
-            print("Canceling.")
-            print("*" * 50)
-        else:
-            print("*" * 50)
-            print("Unknown command.")
-            print("*" * 50)
+    for idx, client in enumerate(clients):
+        if idx == client_id:
+            ask_again = input(f"""Are you sure? ID: {idx} Client:´{client["name"]}´ will be erased. (Y/N): """)
+            if ask_again.upper() == "Y": 
+                clients.pop(idx)
+                print("*" * 50)
+                print("Client removed.")
+                print("*" * 50)
+                break
+            elif ask_again.upper() == "N":
+                print("*" * 50)
+                print("Canceling.")
+                print("*" * 50)
+                break
+            else:
+                print("*" * 50)
+                print("Unknown command.")
+                print("*" * 50)
+                break
     else:
         print("*" * 50)
-        print("Client is not in clients list.")
+        print(f"Client ID: {idx} does not exist.")
         print("*" * 50)
 
 
@@ -135,7 +139,8 @@ if __name__ == "__main__":
             client_id = int(input("Input client ID to update: "))
             update_client(client_id)
         elif command == "4":
-            pass
+            client_id = int(input("Input client ID to delete: "))
+            delete_client(client_id)
         elif command == "5":
             pass
         elif command == "6":
