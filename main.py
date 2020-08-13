@@ -29,26 +29,30 @@ def create_client(client):
 def list_clients():
     global clients
 
-    
     for idx, client in enumerate(clients):
         print(f"""[{idx}] - {client["name"]} - {client["company"]} - {client["email"]} - {client["position"]}""")
         print("-" * 50)
 
 
-def update_client(client_name, updated_client_name):
+def update_client(client_id):
     global clients
 
-    if client_name.capitalize() in clients:
-        idx = clients.index(client_name.capitalize())
-        clients[idx] = updated_client_name.capitalize()
-        print("*" * 50)
-        print("Client updated.")
-        print("*" * 50)
+    for idx, client in enumerate(clients):
+        if idx == client_id:
+            print(f"""Updating ID: {idx} Client:´{client["name"]}´""")
+            clients.pop(idx)
+            client = {
+                "name": _get_client_field("name"),
+                "company":_get_client_field("company"),
+                "email":_get_client_field("email"),
+                "position":_get_client_field("position")          
+                }
+            create_client(client)
+            break
     else:
-        print("Client is not in clients list.")
+        print("There´s no such client ID.")
 
-
-def delete_client(client_name):
+def delete_client(client_id):
     global clients
 
     if client_name.capitalize() in clients:
@@ -85,7 +89,7 @@ def search_client(client_name):
 def _get_client_field(field_name):
     field = None
     while not field or field == "":
-        field =  input(f"Input client´s {field_name} or ´exit´ to cancel and close: ")
+        field =  input(f"Input new client´s {field_name} or ´exit´ to cancel and close: ")
         if field == "exit":
             break
     if field == "exit":
@@ -128,23 +132,12 @@ if __name__ == "__main__":
             list_clients()
             print("*" * 50)
         elif command == "3":
-            client_name = _get_client_name()
-            updated_client_name = input("Input the updated client name: ")
-            update_client(client_name,updated_client_name)
+            client_id = int(input("Input client ID to update: "))
+            update_client(client_id)
         elif command == "4":
-            client_name = _get_client_name()
-            delete_client(client_name)
+            pass
         elif command == "5":
-            client_name = _get_client_name()
-            found = search_client(client_name)
-            if found:
-                print("-" *50)
-                print(f"´{client_name.capitalize()}´ is in the client´s list.")
-                print("-" *50)
-            else:
-                print("-" *50)
-                print(f"´{client_name.capitalize()}´ is not in the client´s list.")
-                print("-" *50)
+            pass
         elif command == "6":
             print("")
             print("Thank you for choosing us.")
