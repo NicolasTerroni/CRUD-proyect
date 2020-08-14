@@ -1,19 +1,29 @@
 import sys
+import csv
+import os
 
-clients =[
-    {
-        'name': 'Pablo',
-        'company': 'Google',
-        'email': 'pablo@google.com',
-        'position': 'Sofware Engineer',
-    },
-    {
-        'name': 'Ricardo',
-        'company': 'Facebook',
-        'email': 'ricardo@facebook.com',
-        'position': 'Data Engineer',
-    },
-]
+CLIENT_TABLE = ".clients.csv"
+CLIENT_SCHEMA = ["name", "company", "email", "position"]
+clients = []
+
+
+def _initialize_clients_from_storage():
+    with open(CLIENT_TABLE, mode="r") as f:
+        reader = csv.DictReader(f, fieldnames=CLIENT_SCHEMA)
+
+        for row in reader:
+            clients.append(row)
+
+
+def _save_clients_to_storage():
+    tmp_table_name = f"{CLIENT_TABLE}.tmp"
+    with open(tmp_table_name, mode="w") as f:
+        writer = csv.DictWriter(f, fieldnames=CLIENT_SCHEMA)
+        writer.writerows(clients)
+
+    os.remove(CLIENT_TABLE)
+    os.rename(tmp_table_name, CLIENT_TABLE)
+
 
 def create_client(client):
     global clients
@@ -100,6 +110,7 @@ def _get_client_field(field_name):
     while not field or field == "":
         field =  input(f"Input new client´s {field_name} or ´exit´ to cancel and close: ")
         if field == "exit":
+            _save_clients_to_storage()
             break
     if field == "exit":
         sys.exit()
@@ -122,6 +133,7 @@ def _print_welcome():
 
 
 if __name__ == "__main__":
+    _initialize_clients_from_storage()
     while True:
         _print_welcome()
         
@@ -154,6 +166,7 @@ if __name__ == "__main__":
             print("")
             print("Thank you for choosing us.")
             print("")
+            _save_clients_to_storage()
             break
         else:
             print("")
