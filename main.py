@@ -21,7 +21,7 @@ def _save_clients_to_storage():
         writer = csv.DictWriter(f, fieldnames=CLIENT_SCHEMA)
         writer.writerows(clients)
 
-    os.remove(CLIENT_TABLE)
+        os.remove(CLIENT_TABLE)
     os.rename(tmp_table_name, CLIENT_TABLE)
 
 
@@ -110,9 +110,9 @@ def _get_client_field(field_name):
     while not field or field == "":
         field =  input(f"Input new client´s {field_name} or ´exit´ to cancel and close: ")
         if field == "exit":
-            _save_clients_to_storage()
             break
     if field == "exit":
+        _save_clients_to_storage()
         sys.exit()
     
     return field
