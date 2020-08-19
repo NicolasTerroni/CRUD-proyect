@@ -1,6 +1,7 @@
 import sys
 import csv
 import os
+import click
 
 CLIENT_TABLE = ".clients.csv"
 CLIENT_SCHEMA = ["name", "company", "email", "position"]
