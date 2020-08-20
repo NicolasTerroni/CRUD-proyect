@@ -1,7 +1,6 @@
 import sys
 import csv
 import os
-import click
 
 CLIENT_TABLE = ".clients.csv"
 CLIENT_SCHEMA = ["name", "company", "email", "position"]
@@ -37,6 +36,7 @@ def create_client(client):
     else:
         print("Client already in client´s list")
 
+
 def list_clients():
     global clients
 
@@ -62,6 +62,7 @@ def update_client(client_id):
             break
     else:
         print("There´s no such client ID.")
+
 
 def delete_client(client_id):
     global clients
